@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="utf-8" />
+    <title>Pulsetto - Secure Checkout</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, viewport-fit=cover" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+
+    <!-- Global js variables -->
+    <script>
+        (function () {
+            const urlParams = new URL(location.href).searchParams
+            const shouldInsertVwoCode = window.sessionStorage.getItem('insertVWOcode')
+
+            window.giddyup = {
+                brandId: 793,
+                offerId: window.sessionStorage.getItem('giddyupOfferId'),
+                country: 'US',
+                shopLogoUrl: 'https://prod-assets.gu-plat.com/Pulsetto-with-space.png',
+                siteDomain: 'getpulsetto.com',
+                siteUrl: '/',
+                siteUrlMainPage: '/offer-01/',
+                siteUrlCheckout: '/checkout/',
+                insertVWOcode: shouldInsertVwoCode,
+                logoDisplayLrg: window.sessionStorage.getItem('logoDisplayLrg') === 'true',
+                primaryColor: window.sessionStorage.getItem('primaryColor') ?? '#009ade',
+                secondaryColor: window.sessionStorage.getItem('secondaryColor') ?? '#dbdbdb',
+                oneTrustId: '',
+                visitorInShippingCountry: false,
+            }
+            // Variables for GuTracking events
+            window.giddyupTracking = {
+                "advertiser_id": "376",
+                "gtm_id": "GTM-MSNK27J",
+                "gu_ga4_id": "G-530ZRJSG5K",
+                "landing_page_event": "19564",
+                "custom_landing_page_event": "19565",
+                "presell_landing_event": "19566",
+                "vsl_landing_event": "19567",
+                "add_to_cart_event": "19568",
+                "initiate_checkout_event": "19569",
+                "post_purchase_event_1": "19570",
+                "post_purchase_event_2": "19571",
+                "post_purchase_event_3": "19572",
+                "shipping_info_event": "19573",
+                "shipping_method_event": "19574",
+                "start_checkout_event": "19575",
+                "view_upsell": "19576",
+                "abandoned_cart_1": "19578",
+                "abandoned_cart_2": "19579",
+                "abandoned_cart_3": "19580",
+                "abandoned_cart_4": "19581",
+                "abandoned_cart_5": "19582",
+                "abandoned_cart_6": "19583",
+                "abandoned_cart_7": "19584",
+                "abandoned_cart_8": "19585",
+                "abandoned_cart_9": "19586",
+                "abandoned_cart_10": "19587",
+                "abandoned_cart_conversion": "19588"
+            };
+            window.giddyupTracking.consent_mode = false;
+            window.giddyupTracking.offer_id = '1060';
+            window.giddyupTracking.house_aff_id = "1547";
+            // Theme colors
+            document.documentElement.style.setProperty('--theme-primary', window.giddyup.primaryColor);
+            document.documentElement.style.setProperty('--theme-secondary', window.giddyup.secondaryColor);
+        })()
+    </script>
+
+    <script type="text/javascript" id="vwoCode" class="optanon-category-C00003">
+        if (Number(window.giddyup.insertVWOcode)) {
+            const VWO_ACCOUNT_ID = 652732;
+
+            // Create global function for VWO to call
+            window.returnGiddyUpId = () => {
+                return window.gu_id
+            }
+
+            /* VWO 360 Async SmartCode */
+            window._vwo_code = window._vwo_code || (function () {
+                var account_id = VWO_ACCOUNT_ID,
+                    version = 1.3,
+                    settings_tolerance = 2000,
+                    library_tolerance = 2500,
+                    use_existing_jquery = false,
+                    is_spa = 1,
+                    hide_element = 'body',
+                    /* DO NOT EDIT BELOW THIS LINE */
+                    f = false, d = document, code = {
+                        use_existing_jquery: function () {
+                            return use_existing_jquery
+                        }, library_tolerance: function () {
+                            return library_tolerance
+                        }, finish: function () {
+                            if (!f) {
+                                f = true;
+                                var e = d.getElementById('_vis_opt_path_hides');
+                                if (e) e.parentNode.removeChild(e)
+                            }
+                        }, finished: function () {
+                            return f
+                        }, load: function (e) {
+                            var t = d.createElement('script');
+                            t.fetchPriority = 'high';
+                            t.src = e;
+                            t.type = 'text/javascript';
+                            t.innerText;
+                            t.onerror = function () {
+                                _vwo_code.finish()
+                            };
+                            d.getElementsByTagName('head')[0].appendChild(t)
+                        }, init: function () {
+                            window.settings_timer = setTimeout(function () {
+                                _vwo_code.finish()
+                            }, settings_tolerance);
+                            var e = d.createElement('style'),
+                                t = hide_element ? hide_element + '{opacity:0 !important;filter:alpha(opacity=0) !important;background:none !important;}' : '',
+                                i = d.getElementsByTagName('head')[0];
+                            e.setAttribute('id', '_vis_opt_path_hides');
+                            e.setAttribute('nonce', document.querySelector('#vwoCode').nonce);
+                            e.setAttribute('type', 'text/css');
+                            if (e.styleSheet) e.styleSheet.cssText = t; else e.appendChild(d.createTextNode(t));
+                            i.appendChild(e);
+                            this.load('https://dev.visualwebsiteoptimizer.com/j.php?a=' + account_id + '&u=' + encodeURIComponent(d.URL) + '&f=' + +is_spa + '&vn=' + version);
+                            return settings_timer
+                        }
+                    };
+                window._vwo_settings_timer = code.init();
+                return code;
+            }());
+            window.giddyupTracking.vwo_enabled = true
+            window.giddyupTracking.vwo_page_type = 'thank_you'
+        }
+    </script>
+
+    <link rel="icon" href="https://prod-assets.gu-plat.com/cropped-favicon-32x32.png" />
+    <link rel="stylesheet" media="screen" href="/dist/checkout.css?t=1760141863" />
+
+    <style>
+        /* CSS cho order summary */
+        .order-summary-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+        }
+
+        .order-summary-section h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 18px;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .order-item-name {
+            flex: 1;
+            color: #555;
+        }
+
+        .order-item-price {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .order-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            margin-top: 15px;
+            border-top: 2px solid #007bff;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+        }
+
+        .success-message {
+            background: #d1edff;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #b8daff;
+        }
+    </style>
+</head>
+
+<body class="ltr checkout">
+    <div id="container" class="single-offer">
+        <div id="main-wrapper" data-v-app="">
+            <main id="app" role="main" logodisplaylrg="false" primarycolor="#00a85f" secondarycolor="#000000">
+                <!-- Thêm order summary section vào trước payment form -->
+                <div id="order-summary-container" class="order-summary-section" style="display: none;">
+                    <h3>Order Summary</h3>
+                    <div id="order-items-list">
+                        <!-- Order items will be populated by JavaScript -->
+                    </div>
+                    <div class="order-total">
+                        <span>Total:</span>
+                        <span id="order-total-amount">USD $0.00</span>
+                    </div>
+                </div>
+
+                <div class="row" style="position: relative;">
+                    <form id="payment-form" class="">
+                        <div id="checkout-header" class="">
+                            <div id="checkout-logo-wrapper">
+                                <div id="checkout-logo"><a
+                                        href="https://getpulsetto.com/offer-01/?oid=1060&amp;gu_id=d48b9f97-3e9d-4204-a450-53db490b2c1e&amp;aff_id=11258&amp;affid=11258#offer"><img
+                                            src="https://prod-assets.gu-plat.com/Pulsetto-with-space.png" class=""
+                                            alt="logo"></a></div>
+                                <div id="cart-details-mobile-header-teleport"></div>
+                            </div>
+                            <div id="cart-details-teleport"></div>
+                        </div>
+                        <div id="breadcrumbs">
+                            <div class="breadcrumb-step">Offer </div>
+                            <div class="breadcrumb-step active">Details </div>
+                            <div class="breadcrumb-step" style="display: none;">Shipping </div>
+                            <div class="breadcrumb-step">Payments </div>
+                        </div>
+                        <div data-v-6187df50="" class="checkout-countdown">
+                            <div data-v-6187df50="" class="checkout-countdown-wrapper">
+                                <div data-v-6187df50="">
+                                    <div data-v-4766aee6="" data-v-6187df50="">
+                                        <div data-v-4766aee6="" class="timer">
+                                            <div data-v-4766aee6="" class="timer__block">
+                                                <div data-v-4766aee6="" class="timer__digit">
+                                                    <div data-v-4766aee6="" class="up">1</div>
+                                                    <div data-v-4766aee6="" class="down">0</div>
+                                                </div>
+                                            </div>
+                                            <div data-v-4766aee6="" class="timer__block">
+                                                <div data-v-4766aee6="" class="timer__digit">
+                                                    <div data-v-4766aee6="" class="up">9</div>
+                                                    <div data-v-4766aee6="" class="down">8</div>
+                                                </div>
+                                            </div>
+                                            <div data-v-4766aee6="" class="timer__separator">:</div>
+                                            <div data-v-4766aee6="" class="timer__block">
+                                                <div data-v-4766aee6="" class="timer__digit">
+                                                    <div data-v-4766aee6="" class="up">2</div>
+                                                    <div data-v-4766aee6="" class="down">1</div>
+                                                </div>
+                                            </div>
+                                            <div data-v-4766aee6="" class="timer__block">
+                                                <div data-v-4766aee6="" class="timer__digit">
+                                                    <div data-v-4766aee6="" class="up">7</div>
+                                                    <div data-v-4766aee6="" class="down">6</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div data-v-6187df50="">
+                                    <div data-v-6187df50="" class="countdown-header">Left to complete purchase</div>
+                                    <div data-v-6187df50="" class="countdown-subheader">Your price is only guaranteed
+                                        for this time</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div id="contact-information" class="checkout-container">
+                                <div class="checkout-input-wrapper">
+                                    <div id="express-checkout-wrapper">
+                                        <h3>Express Checkout</h3>
+                                        <div id="paypal-pay-later-messaging" data-pp-currency="USD"
+                                            data-pp-amount="239.00" data-pp-id="1" style="margin-bottom: 10px;">
+                                            <!-- PayPal message iframe -->
+                                        </div>
+                                        <div id="express-checkout-container">
+                                            <div id="paypal-button-container">
+                                                <!-- PayPal buttons iframe -->
+                                            </div>
+                                            <div id="express-checkout-element" class="StripeElement">
+                                                <!-- Stripe express checkout iframe -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="checkout-input-wrapper">
+                                    <div id="express-checkout-or-wrapper">
+                                        <div id="express-checkout-or-line"></div> <span
+                                            id="express-checkout-or">or</span>
+                                    </div>
+                                </div>
+                                <h2 id="contact-information-header">Contact Information</h2>
+                                <div class="checkout-input-wrapper">
+                                    <div id="link-authentication-element" class="StripeElement">
+                                        <!-- Stripe authentication iframe -->
+                                    </div>
+                                </div>
+                                <div class="checkout-input-wrapper" style="display: none;">
+                                    <div id="link-authentication-error">Your email address is invalid.</div>
+                                </div>
+                                <div class="checkout-input-wrapper">
+                                    <div id="email-me-wrapper"><label for="email-me" id="email-me-label">Contact me with
+                                            updates, news and special offers <input type="checkbox" id="email-me"
+                                                value="1"> <span id="email-me-checkmark"
+                                                style="background-image: url(&quot;data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgdmlld0JveD0iMCAwIDE3IDE3IiBmaWxsPSJub25lIj4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNNCAwLjAwMDI0NDE0MUMxLjc5MDg2IDAuMDAwMjQ0MTQxIDAgMS43OTExIDAgNC4wMDAyNFYxMy4wMDAyQzAgMTUuMjA5NCAxLjc5MDg2IDE3LjAwMDIgNCAxNy4wMDAySDEzQzE1LjIwOTEgMTcuMDAwMiAxNyAxNS4yMDk0IDE3IDEzLjAwMDJWNC4wMDAyNEMxNyAxLjc5MTExIDE1LjIwOTEgMC4wMDAyNDQxNDEgMTMgMC4wMDAyNDQxNDFINFpNMTMuMzc5MyA0Ljg5MTIzQzEzLjg1MDQgNS4zMTgzMiAxMy44NzU5IDYuMDM1NDggMTMuNDM2MyA2LjQ5MzA2TDguMTYyMzYgMTEuOTgyMkM3LjYwODg5IDEyLjU1ODMgNi42Njg4OCAxMi41NTgzIDYuMTE1NDEgMTEuOTgyMkwzLjU2Mzc3IDkuMzI2MzlDMy4xMjQxNCA4Ljg2ODgxIDMuMTQ5NTkgOC4xNTE2NSAzLjYyMDYzIDcuNzI0NTZDNC4wOTE2NyA3LjI5NzQ5IDQuODI5OTIgNy4zMjIyMiA1LjI2OTU3IDcuNzc5OEw3LjEzODg4IDkuNzI1NDNMMTEuNzMwNCA0Ljk0NjQ3QzEyLjE3MDEgNC40ODg4OSAxMi45MDgzIDQuNDY0MTYgMTMuMzc5MyA0Ljg5MTIzWiIgZmlsbD0iIzAwYTg1ZiIvPgogICAgICAgICAgICAgICAgICAgICAgICA8L3N2Zz4=&quot;);"></span></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="shipping-address" class="checkout-container">
+                                <h2 id="header-shipping-address">Shipping Address</h2>
+                                <div class="checkout-input-wrapper">
+                                    <div id="address-element" class="StripeElement">
+                                        <!-- Stripe address iframe -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="paypal-confirm" class="checkout-container" style="display: none;">
+                            <!-- PayPal confirm section -->
+                        </div>
+                        <div id="shipping-method" class="checkout-container" style="display: none;">
+                            <!-- Shipping method section -->
+                        </div>
+                        <div id="payment-details" class="checkout-container" style="display: none;">
+                            <!-- Payment details section -->
+                        </div>
+                        <div data-v-62baac58="" id="payment-loader" class="checkout-container" style="display: none;">
+                            <div data-v-62baac58="" id="payment-loader-image"><img data-v-62baac58=""
+                                    src="https://partner.giddyup.io/media/catalog/variant_media/31/5d/bc/315dbc2a-c5ed-4eb1-b4d3-85842875ed97.png?format=webp&amp;width=200&amp;height=200&amp;fit=bounds"
+                                    alt=""></div>
+                            <div data-v-62baac58="" id="payment-loader-text">
+                                <p data-v-62baac58=""><strong data-v-62baac58="">Placing Order</strong></p>
+                                <p data-v-62baac58="">Please do not hit refresh</p>
+                            </div>
+                        </div>
+                        <div id="checkout-submit" class="checkout-container step-address">
+                            <div id="checkout-logo-back-to-cart"><svg xmlns="http://www.w3.org/2000/svg" width="7"
+                                    height="12" viewBox="0 0 7 12" fill="none">
+                                    <path
+                                        d="M5.85156 11.0002L1.10462 6.2533C1.07146 6.22014 1.04514 6.18077 1.02719 6.13743C1.00924 6.0941 1.00001 6.04766 1.00001 6.00075C1.00001 5.95385 1.00924 5.90741 1.02719 5.86407C1.04514 5.82074 1.07146 5.78137 1.10462 5.7482L5.85156 1.00024"
+                                        stroke="#777777" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"></path>
+                                </svg> <span>Return to Offer</span></div>
+                            <div class="checkout-input-wrapper"><button id="submit"
+                                    style="background: rgb(0, 168, 95); width: 207.25px;"><span
+                                        id="button-text">Continue to Payment</span></button></div>
+                        </div>
+                    </form>
+                    <div id="cart-details">
+                        <div data-v-e9b97ac2="" id="mobile-header" style="display: none;">
+                            <h2 data-v-e9b97ac2="">Cart</h2>
+                            <div data-v-e9b97ac2="" id="mobile-header-arrow">
+                                <svg data-v-e9b97ac2="" width="12" height="8" viewBox="0 0 12 8" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                                    <path data-v-e9b97ac2=""
+                                        d="M1 6.16659L5.86901 1.94677C5.94419 1.88162 6.05581 1.88162 6.13099 1.94677L11 6.16659"
+                                        stroke="#222222" stroke-width="2" stroke-linecap="round"></path>
+                                </svg>
+                                <svg data-v-e9b97ac2="" width="12" height="8" viewBox="0 0 12 8" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path data-v-e9b97ac2=""
+                                        d="M1 1.83317L5.86901 6.05298C5.94419 6.11813 6.05581 6.11813 6.13099 6.05298L11 1.83317"
+                                        stroke="#222222" stroke-width="2" stroke-linecap="round"></path>
+                                </svg>
+                            </div>
+                            <div data-v-e9b97ac2="" id="mobile-header-total">USD $239.00</div>
+                        </div>
+                        <div data-v-e9b97ac2="" id="gu-cart" class="">
+                            <div data-v-e9b97ac2="" class="details">
+                                <div data-v-e9b97ac2="" class="content">
+                                    <div data-v-e9b97ac2="" id="gu-product-wrapper" class="">
+                                        <div data-v-e9b97ac2="" id="gu-product-wrapper-text"></div>
+                                        <div data-v-e9b97ac2="" class="gu-product">
+                                            <div data-v-e9b97ac2="" class="gu-product-wrapper">
+                                                <div data-v-e9b97ac2="" class="aspect">
+                                                    <div data-v-e9b97ac2="" class="gu-product-image with-badge"
+                                                        data-product-qty="1">
+                                                        <div data-v-e9b97ac2="" class="badge">1</div>
+                                                        <picture data-v-e9b97ac2="">
+                                                            <source data-v-e9b97ac2=""
+                                                                srcset="https://partner.giddyup.io/media/catalog/variant_media/31/5d/bc/315dbc2a-c5ed-4eb1-b4d3-85842875ed97.png?format=webp&amp;width=200&amp;height=200&amp;fit=bounds"
+                                                                type="image/webp"> <img data-v-e9b97ac2=""
+                                                                src="https://partner.giddyup.io/media/catalog/variant_media/31/5d/bc/315dbc2a-c5ed-4eb1-b4d3-85842875ed97.png?format=jpg&amp;width=200&amp;height=200&amp;fit=bounds"
+                                                                alt="" decoding="async" class="skip-lazy">
+                                                        </picture>
+                                                    </div>
+                                                </div>
+                                                <div data-v-e9b97ac2="" class="aspect">
+                                                    <div data-v-e9b97ac2="" class="product-specifications">
+                                                        <div data-v-e9b97ac2="" class="inner">
+                                                            <div data-v-e9b97ac2="" class="product-name-wrapper">
+                                                                <div data-v-e9b97ac2="" class="product-name"><span
+                                                                        data-v-e9b97ac2="">Pulsetto</span></div>
+                                                            </div>
+                                                            <div data-v-e9b97ac2="" class="product-detail-display">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div data-v-e9b97ac2="" class="aspect product-price-wrapper">
+                                                    <div data-v-e9b97ac2="" class="product-price"><span
+                                                            data-v-e9b97ac2="">$239.00</span>
+                                                        <div data-v-e9b97ac2="" class="product-price-discount">
+                                                            <div data-v-e9b97ac2="" class="product-price-discount-msrp">
+                                                                $478.00</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div data-v-e9b97ac2="" class="pricing">
+                                        <div data-v-e9b97ac2="" class="row subtotal" style="">
+                                            <div data-v-e9b97ac2="" class="col-lg-8 p-0 name"><span
+                                                    data-v-e9b97ac2="">Subtotal</span></div>
+                                            <div data-v-e9b97ac2="" class="col-lg-4 p-0 price"><span
+                                                    data-v-e9b97ac2="">$239.00</span></div>
+                                        </div>
+                                        <div data-v-e9b97ac2="" class="row shipping">
+                                            <div data-v-e9b97ac2="" class="col-lg-8 p-0 name"><span
+                                                    data-v-e9b97ac2="">Shipping</span></div>
+                                            <div data-v-e9b97ac2="" class="col-lg-4 p-0 price"><span data-v-e9b97ac2=""
+                                                    class="checkout-step_shipping">Enter delivery address</span></div>
+                                        </div>
+                                        <div data-v-e9b97ac2="" class="row tax" style="display: none;">
+                                            <div data-v-e9b97ac2="" class="col-lg-8 p-0 name"><span
+                                                    data-v-e9b97ac2="">Tax</span></div>
+                                            <div data-v-e9b97ac2="" class="col-lg-4 p-0 price"><span
+                                                    data-v-e9b97ac2="">$0.00</span></div>
+                                        </div>
+                                        <div data-v-e9b97ac2="" class="row total" style="">
+                                            <div data-v-e9b97ac2="" class="col-lg-8 p-0 name"><span
+                                                    data-v-e9b97ac2="">Total</span></div>
+                                            <div data-v-e9b97ac2="" class="col-lg-4 p-0 price"><span data-v-e9b97ac2=""
+                                                    class="total-currency">USD</span> <span
+                                                    data-v-e9b97ac2="">$239.00</span></div>
+                                        </div>
+                                    </div>
+                                    <div data-v-e9b97ac2="" class="row total-savings" style="display: none;">
+                                        <div data-v-e9b97ac2="" class="col-lg-8 p-0 name"><svg data-v-e9b97ac2=""
+                                                xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                                                viewBox="0 0 14 14" fill="none">
+                                                <path data-v-e9b97ac2=""
+                                                    d="M0 7.06393V1C0 0.447715 0.447715 0 1 0H7.06393C7.342 0 7.60751 0.115782 7.79672 0.319549L13.3443 6.29384C13.7103 6.688 13.6989 7.30106 13.3186 7.6814L7.6814 13.3186C7.30106 13.6989 6.688 13.7103 6.29384 13.3443L0.319549 7.79672C0.115782 7.60751 0 7.342 0 7.06393Z"
+                                                    fill="black"></path>
+                                            </svg> <span data-v-e9b97ac2="" class="total-savings-transform">Total
+                                                Savings</span></div>
+                                        <div data-v-e9b97ac2="" class="col-lg-4 p-0 price"><span
+                                                data-v-e9b97ac2="">$239.00</span></div>
+                                    </div>
+                                </div>
+                                <div data-v-e9b97ac2="" class="actions"></div>
+                            </div>
+                        </div>
+                        <div data-v-07ac9aba="" class="guarantees-block columns">
+                            <div data-v-07ac9aba="" class="guarantees-item">
+                                <div data-v-07ac9aba="" class="guarantees-image-container"><img data-v-07ac9aba=""
+                                        src="https://prod-assets.gu-plat.com/shipping-truck-icon.svg"
+                                        alt="guarantee item" decoding="async" loading="lazy" height="32"
+                                        class="guarantees-image"></div>
+                                <div data-v-07ac9aba="" class="guarantee-caption">
+                                    <p data-v-07ac9aba="">Free Shipping Worldwide</p>
+                                </div>
+                            </div>
+                            <div data-v-07ac9aba="" class="guarantees-item">
+                                <div data-v-07ac9aba="" class="guarantees-image-container"><img data-v-07ac9aba=""
+                                        src="https://prod-assets.gu-plat.com/icon-30-day-01_2025-05-09-160728_kotq.svg"
+                                        alt="guarantee item" decoding="async" loading="lazy" height="32"
+                                        class="guarantees-image"></div>
+                                <div data-v-07ac9aba="" class="guarantee-caption">
+                                    <p data-v-07ac9aba="">30-Day Money Back Guarantee</p>
+                                </div>
+                            </div>
+                            <div data-v-07ac9aba="" class="guarantees-item">
+                                <div data-v-07ac9aba="" class="guarantees-image-container"><img data-v-07ac9aba=""
+                                        src="https://prod-assets.gu-plat.com/icon-sold-01-1_2025-05-09-160836_padh.svg"
+                                        alt="guarantee item" decoding="async" loading="lazy" height="32"
+                                        class="guarantees-image"></div>
+                                <div data-v-07ac9aba="" class="guarantee-caption">
+                                    <p data-v-07ac9aba="">20,000+ 5-Star Reviews</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-v-291ba599="" class="testimonials-block">
+                            <div data-v-291ba599="" class="testimonials-header">
+                                <div data-v-291ba599="" class="testimonials-header-texts">
+                                    <h4 data-v-291ba599="">Customer Reviews</h4> <span data-v-291ba599="">Hear from a
+                                        few of our biggest fans</span>
+                                </div>
+                                <div data-v-291ba599="" class="testimonials-header-verified"><svg data-v-291ba599=""
+                                        xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14"
+                                        fill="none">
+                                        <path data-v-291ba599=""
+                                            d="M13.7179 7.86373C14.0941 7.52932 14.0941 6.90232 13.7179 6.56791L13.4671 6.35891C13.1744 6.1081 13.0908 5.7319 13.258 5.39749L13.3834 5.10489C13.5925 4.64508 13.3416 4.10167 12.84 3.93447L12.5056 3.85087C12.1712 3.76727 11.9204 3.43286 11.8786 3.05666V2.72225C11.8368 2.26244 11.4606 1.88624 11.0426 1.88624C11.0008 1.88624 10.959 1.88624 10.8754 1.88624L10.541 1.92804C10.4992 1.92804 10.4574 1.92804 10.3738 1.92804C10.0812 1.92804 9.7886 1.76084 9.62139 1.46823L9.45419 1.17563C9.28699 0.883024 8.99438 0.71582 8.70178 0.71582C8.53457 0.71582 8.36737 0.757621 8.20017 0.883023L7.90757 1.09203C7.74036 1.21743 7.57316 1.25923 7.40596 1.25923C7.23876 1.25923 7.07155 1.21743 6.90435 1.09203L6.61175 0.883023C6.44454 0.757621 6.27734 0.71582 6.11014 0.71582C5.81753 0.71582 5.52493 0.883024 5.35773 1.17563L5.19052 1.46823C5.02332 1.76084 4.73072 1.92804 4.43811 1.92804C4.39631 1.92804 4.35451 1.92804 4.27091 1.92804L3.9365 1.88624C3.8947 1.88624 3.8529 1.88624 3.7693 1.88624C3.3095 1.88624 2.93329 2.22064 2.93329 2.68045V3.01486C2.93329 3.39106 2.68249 3.68367 2.30628 3.80907L1.97188 3.89267C1.47027 4.01807 1.21946 4.56148 1.42847 5.06309L1.55387 5.35569C1.67927 5.6901 1.59567 6.1081 1.34487 6.31711L1.17766 6.56791C0.801456 6.90232 0.801456 7.52932 1.17766 7.86373L1.42847 8.07273C1.72107 8.32354 1.80467 8.69974 1.63747 9.03415L1.51207 9.32675C1.30306 9.78656 1.55387 10.33 2.05548 10.4972L2.38988 10.5808C2.72429 10.6644 2.97509 10.9988 3.01689 11.375V11.7094C3.05869 12.1692 3.4349 12.5454 3.8529 12.5454C3.8947 12.5454 3.9365 12.5454 4.02011 12.5454L4.35451 12.5036C4.39631 12.5036 4.43811 12.5036 4.52171 12.5036C4.81432 12.5036 5.10692 12.6708 5.27413 12.9634L5.44133 13.256C5.60853 13.5486 5.90113 13.7158 6.19374 13.7158C6.36094 13.7158 6.52814 13.674 6.69535 13.5486L6.98795 13.3396C7.15515 13.2142 7.32236 13.1724 7.48956 13.1724C7.65676 13.1724 7.82396 13.2142 7.99117 13.3396L8.28377 13.5486C8.45097 13.674 8.61818 13.7158 8.78538 13.7158C9.07798 13.7158 9.37059 13.5486 9.53779 13.256L9.70499 12.9634C9.8722 12.6708 10.1648 12.5036 10.4574 12.5036C10.4992 12.5036 10.541 12.5036 10.6246 12.5036L10.959 12.5454C11.0008 12.5454 11.0426 12.5454 11.1262 12.5454C11.586 12.5454 11.9622 12.211 11.9622 11.7512V11.4168C11.9622 11.0406 12.213 10.748 12.5892 10.6226L12.9236 10.539C13.4253 10.4136 13.6761 9.87016 13.4671 9.36855L13.3416 9.07595C13.2162 8.74155 13.2998 8.32354 13.5507 8.11453L13.7179 7.86373ZM7.78216 8.40714L6.73715 9.45215L5.69213 8.40714L4.68892 7.40392L5.73393 6.35891L6.73715 7.36212L9.11978 4.97949L10.1648 6.0245L7.78216 8.40714Z"
+                                            fill="var(--theme-primary, #009ADE)"></path>
+                                    </svg> <span data-v-291ba599="">Verified</span></div>
+                            </div>
+                            <div data-v-291ba599="" class="testimonials-reviews">
+                                <!-- Testimonials content -->
+                            </div>
+                        </div>
+                        <div data-v-03d04d2d="" class="checkout-image-wrapper"><img data-v-03d04d2d=""
+                                src="https://prod-assets.gu-plat.com/pulsetto-g2.webp" class="fit-to-full-width"
+                                alt="Checkout Image"></div>
+                    </div>
+                </div>
+                <div data-v-5f796a7b="" class="dialog-wrapper" style="display: none;">
+                    <div data-v-5f796a7b="" class="dialog">
+                        <div data-v-5f796a7b="" class="dialog-icon"><svg data-v-5f796a7b=""
+                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45.999 45.999">
+                                <path data-v-5f796a7b="" fill="#000"
+                                    d="M39.264 6.736c-8.982-8.981-23.545-8.982-32.528 0-8.982 8.982-8.981 23.545 0 32.528 8.982 8.98 23.545 8.981 32.528 0 8.981-8.983 8.98-23.545 0-32.528zM25.999 33a3 3 0 11-6 0V21a3 3 0 116 0v12zm-3.053-17.128c-1.728 0-2.88-1.224-2.844-2.735-.036-1.584 1.116-2.771 2.879-2.771 1.764 0 2.88 1.188 2.917 2.771-.001 1.511-1.152 2.735-2.952 2.735z">
+                                </path>
+                            </svg></div>
+                        <div data-v-5f796a7b="" class="dialog-content">
+                            <div data-v-5f796a7b="" class="dialog-header">
+                                <h4>Unfortunately, your payment could not be processed.</h4>
+                            </div>
+                            <div data-v-5f796a7b="" class="dialog-body">
+                                <p>There was an error processing your payment with PayPal. Please select a different way
+                                    to pay and to try again.</p>
+                            </div>
+                            <div data-v-5f796a7b="" class="dialog-footer"><button>Pay another way</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="/dist/checkout.js?t=1760141863"></script>
+    <script type="text/javascript" src="https://www.gu-ecom.com/scripts/sdk/everflow.vanilla.js"
+        id="everflow-js"></script>
+
+    <!-- Script xử lý order data từ query parameter -->
+    <script>
+        // Hàm giải mã base64
+        function decodeOrderData(encodedData) {
+            try {
+                const jsonString = decodeURIComponent(escape(atob(encodedData)));
+                return JSON.parse(jsonString);
+            } catch (error) {
+                console.error('Lỗi khi giải mã dữ liệu:', error);
+                return null;
+            }
+        }
+
+        // Hàm lấy query parameter từ URL
+        function getQueryParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Hàm hiển thị thông tin đơn hàng
+        function displayOrderSummary(orderData) {
+            const orderSummaryContainer = document.getElementById('order-summary-container');
+            const orderItemsList = document.getElementById('order-items-list');
+            const orderTotalAmount = document.getElementById('order-total-amount');
+
+            if (!orderData) {
+                orderSummaryContainer.innerHTML = '<div class="error-message">Cannot load order information</div>';
+                orderSummaryContainer.style.display = 'block';
+                return;
+            }
+
+            let html = '';
+
+            // Hiển thị bundle chính
+            if (orderData.bundle && orderData.bundle.title) {
+                html += `
+                    <div class="order-item">
+                        <span class="order-item-name">${orderData.bundle.title}</span>
+                        <span class="order-item-price">$${orderData.bundle.price}.00</span>
+                    </div>
+                `;
+            }
+
+            // Hiển thị các addons
+            if (orderData.addons && orderData.addons.length > 0) {
+                orderData.addons.forEach(addon => {
+                    html += `
+                        <div class="order-item">
+                            <span class="order-item-name">${addon.title}</span>
+                            <span class="order-item-price">$${addon.price}.00</span>
+                        </div>
+                    `;
+                });
+            }
+
+            orderItemsList.innerHTML = html;
+            orderTotalAmount.textContent = `USD $${orderData.total}.00`;
+            orderSummaryContainer.style.display = 'block';
+        }
+
+        // Hàm cập nhật cart details với thông tin mới
+        function updateCartDetails(orderData) {
+            // Cập nhật subtotal
+            const subtotalElement = document.querySelector('.row.subtotal .price span');
+            if (subtotalElement && orderData.total) {
+                subtotalElement.textContent = `$${orderData.total}.00`;
+            }
+
+            // Cập nhật total
+            const totalElement = document.querySelector('.row.total .price span');
+            if (totalElement && orderData.total) {
+                totalElement.textContent = `$${orderData.total}.00`;
+            }
+
+            // Cập nhật mobile header total
+            const mobileTotalElement = document.getElementById('mobile-header-total');
+            if (mobileTotalElement && orderData.total) {
+                mobileTotalElement.textContent = `USD $${orderData.total}.00`;
+            }
+
+            // Cập nhật product price trong cart
+            const productPriceElement = document.querySelector('.product-price span');
+            if (productPriceElement && orderData.bundle && orderData.bundle.price) {
+                productPriceElement.textContent = `$${orderData.bundle.price}.00`;
+            }
+
+            // Cập nhật PayPal amount nếu có
+            const paypalAmountElement = document.querySelector('[data-pp-amount]');
+            if (paypalAmountElement && orderData.total) {
+                paypalAmountElement.setAttribute('data-pp-amount', orderData.total.toFixed(2));
+            }
+        }
+
+        // Hàm khởi tạo trang thanh toán
+        function initializeCheckoutPage() {
+            // Lấy encoded data từ query parameter
+            const encodedData = getQueryParam('data');
+
+            if (!encodedData) {
+                // Không có encoded data, hiển thị thông báo lỗi
+                const orderSummaryContainer = document.getElementById('order-summary-container');
+                orderSummaryContainer.innerHTML = '<div class="error-message">Missing order information. Please return to the offer page.</div>';
+                orderSummaryContainer.style.display = 'block';
+                return;
+            }
+
+            // Giải mã dữ liệu
+            const orderData = decodeOrderData(encodedData);
+
+            if (!orderData) {
+                const orderSummaryContainer = document.getElementById('order-summary-container');
+                orderSummaryContainer.innerHTML = '<div class="error-message">Invalid order information. Please return to the offer page.</div>';
+                orderSummaryContainer.style.display = 'block';
+                return;
+            }
+
+            // Hiển thị thông tin đơn hàng
+            displayOrderSummary(orderData);
+
+            // Cập nhật cart details
+            updateCartDetails(orderData);
+
+            // Lưu orderData vào biến global để sử dụng khi submit form
+            window.currentOrderData = orderData;
+
+            console.log('Order data loaded:', orderData);
+        }
+
+        // Thêm xử lý khi form được submit
+        function enhanceFormSubmission() {
+            const paymentForm = document.getElementById('payment-form');
+            const submitButton = document.getElementById('submit');
+
+            if (paymentForm && submitButton) {
+                // Lưu lại hàm xử lý gốc
+                const originalOnClick = submitButton.onclick;
+
+                submitButton.onclick = function (e) {
+                    // Thêm order data vào form trước khi submit
+                    if (window.currentOrderData) {
+                        // Tạo hidden input để chứa order data
+                        let orderDataInput = document.getElementById('order-data-hidden');
+                        if (!orderDataInput) {
+                            orderDataInput = document.createElement('input');
+                            orderDataInput.type = 'hidden';
+                            orderDataInput.name = 'order_data';
+                            orderDataInput.id = 'order-data-hidden';
+                            paymentForm.appendChild(orderDataInput);
+                        }
+                        orderDataInput.value = JSON.stringify(window.currentOrderData);
+                    }
+
+                    // Gọi hàm xử lý gốc nếu có
+                    if (originalOnClick) {
+                        originalOnClick.call(this, e);
+                    }
+                };
+            }
+        }
+
+        // Khởi chạy khi trang load
+        document.addEventListener('DOMContentLoaded', function () {
+            initializeCheckoutPage();
+            enhanceFormSubmission();
+        });
+    </script>
+
+    <!-- GU_TRACKING END -->
+
+
+    <iframe name="__privateStripeController4721" frameborder="0" allowtransparency="true" scrolling="no"
+        role="presentation" allow="payment *"
+        src="https://js.stripe.com/v3/controller-with-preconnect-5b9522ed5f7fafb0013e06e3958d9850.html#__shared_params__[version]=v3&amp;__shared_params__[light_experiment_assignments]=%7B%22token%22%3A%2249ca4522-4ce5-4721-9c6c-a86b5f0f5da8%22%2C%22assignments%22%3A%7B%22elements_apple_pay_skip_wallet_config%22%3A%22treatment%22%7D%7D&amp;apiKey=pk_live_51KwV66H2wLHuCKJpqxIc46cBtStdQWpTrLp64e6CKGbyf8bnglhNUMwQtvRYaFRzLXXQhk4yOcp2qh1njjFkACza00xNkug5sr&amp;stripeJsId=49ca4522-4ce5-4721-9c6c-a86b5f0f5da8&amp;stripeObjId=sobj-812e10a1-d0a8-4791-8b16-b4936c7fe6f3&amp;firstStripeInstanceCreatedLatency=531&amp;controllerCount=1&amp;isCheckout=false&amp;stripeJsLoadTime=1760352541078&amp;manualBrowserDeprecationRollout=false&amp;mids[guid]=NA&amp;mids[muid]=a709922a-7f3d-4180-b883-4938a0a6b2f53de33e&amp;mids[sid]=b0b41196-d31a-41ff-84bb-bc087577ec6ce26a00&amp;referrer=https%3A%2F%2Fgetpulsetto.com%2Fcheckout%2F%3Foid%3D1060%26gu_id%3Dd48b9f97-3e9d-4204-a450-53db490b2c1e%26aff_id%3D11258%26affid%3D11258&amp;controllerId=__privateStripeController4721"
+        aria-hidden="true" tabindex="-1"
+        style="border: none !important; margin: 0px !important; padding: 0px !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; visibility: hidden !important; position: fixed !important; height: 1px !important; pointer-events: none !important; user-select: none !important;"></iframe><iframe
+        frameborder="0" allowtransparency="true" scrolling="no" name="hcaptcha-invisible" referrerpolicy="no-referrer"
+        aria-hidden="true" tabindex="-1"
+        src="https://js.stripe.com/v3/hcaptcha-invisible-63079869d477e23f3d4b7c494ae11e4e.html#debugMode=false&amp;parentOrigin=https%3A%2F%2Fgetpulsetto.com"
+        style="border: none !important; margin: 0px !important; padding: 0px !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; visibility: hidden !important; position: fixed !important; height: 1px !important; pointer-events: none !important; user-select: none !important;"
+        data-initialized="true"></iframe><iframe name="__privateStripeMetricsController4720" frameborder="0"
+        allowtransparency="true" scrolling="no" role="presentation" allow="payment *"
+        src="https://js.stripe.com/v3/m-outer-3437aaddcdf6922d623e172c2d6f9278.html#url=https%3A%2F%2Fgetpulsetto.com&amp;title=Pulsetto%20-%20Secure%20Checkout&amp;referrer=https%3A%2F%2Fgetpulsetto.com%2Foffer-01%2F%3Foid%3D1060%26gu_id%3Dd48b9f97-3e9d-4204-a450-53db490b2c1e%26aff_id%3D11258%26affid%3D11258&amp;muid=a709922a-7f3d-4180-b883-4938a0a6b2f53de33e&amp;sid=b0b41196-d31a-41ff-84bb-bc087577ec6ce26a00&amp;version=6&amp;preview=false&amp;metaReferrerPolicy=origin-when-cross-origin&amp;__shared_params__[version]=v3"
+        aria-hidden="true" tabindex="-1"
+        style="border: none !important; margin: 0px !important; padding: 0px !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; visibility: hidden !important; position: fixed !important; height: 1px !important; pointer-events: none !important; user-select: none !important;"></iframe><iframe
+        name="__privateStripeFrame4727" frameborder="0" allowtransparency="true" scrolling="no" role="presentation"
+        allow="payment *"
+        src="https://js.stripe.com/v3/google-maps-inner-9852247e783e8987835aefc9028f631f.html#__shared_params__[version]=v3&amp;__shared_params__[light_experiment_assignments]=%7B%22token%22%3A%2249ca4522-4ce5-4721-9c6c-a86b5f0f5da8%22%2C%22assignments%22%3A%7B%22elements_apple_pay_skip_wallet_config%22%3A%22treatment%22%7D%7D&amp;apiKey=AIzaSyCab6eIMNih34mQb3XI_QWXagmF2_rvQAg&amp;elementMode=shipping&amp;referrer=https%3A%2F%2Fgetpulsetto.com%2Fcheckout%2F%3Foid%3D1060%26gu_id%3Dd48b9f97-3e9d-4204-a450-53db490b2c1e%26aff_id%3D11258%26affid%3D11258&amp;controllerId=__privateStripeController4721"
+        aria-hidden="true" tabindex="-1"
+        style="border: none !important; margin: 0px !important; padding: 0px !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; visibility: hidden !important; position: fixed !important; height: 1px !important; pointer-events: none !important; user-select: none !important;"></iframe>
+</body>
+
+</html>
