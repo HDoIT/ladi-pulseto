@@ -661,6 +661,13 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        @media (min-width: 786px) {
+            .video-three {
+                top: 223px !important;
+                height: 50% !important;
+            }
+        }
     </style>
     <link rel="stylesheet" media="screen" href="/css/themes/default.css" />
 
@@ -751,7 +758,7 @@
                                         </div>
                                     </div>
 
-                                    <video loop playsinline muted class="main asset-video-player" title="Intro Video"
+                                    <video loop playsinline class="main asset-video-player" title="Intro Video"
                                         width="100%" height="300" poster="/images/vd1.jpg">
                                         <source src="/images/mỗi ngày bạn.mp4" type="video/mp4">
                                         Trình duyệt của bạn không hỗ trợ thẻ video.
@@ -1376,7 +1383,34 @@
 
                         <div class="item">
                             <div class="left">
-                                <video autoplay="" playsinline="" loop="" class="main asset-video-player"
+                                <div class="video-wrapper">
+                                    <div>
+                                        <div class="asset-video-player-button-wrapper">
+                                            <div class="asset-video-player-button">
+                                                ▶
+                                            </div>
+                                        </div>
+
+                                        <video loop playsinline class="main asset-video-player video-three"
+                                            title="Intro Video" width="100%" height="300" poster="/images/HTN.jpg">
+                                            <source
+                                                src="https://res.cloudinary.com/dob5mpih9/video/upload/v1761641645/clideo_editor_2632a22716514866b524febc0747062b_jg5d6u.mp4"
+                                                type="video/mp4">
+                                            Trình duyệt của bạn không hỗ trợ thẻ video.
+                                        </video>
+
+                                        <video autoplay playsinline loop muted
+                                            class="preroll asset-video-player-preroll hidden"
+                                            title="Intro Video Preroll" width="100%" height="300"
+                                            poster="/images/HTN.jpg">
+                                            <source
+                                                src="https://res.cloudinary.com/dob5mpih9/video/upload/v1761641645/clideo_editor_2632a22716514866b524febc0747062b_jg5d6u.mp4"
+                                                type="video/mp4">
+                                            Trình duyệt của bạn không hỗ trợ thẻ video.
+                                        </video>
+                                    </div>
+                                </div>
+                                <!-- <video autoplay="" playsinline="" loop="" class="main asset-video-player"
                                     title="Plus More — Choose Your Bliss With The Pulsetto App!" width="100%"
                                     height="410" poster="/images/HTN.jpg">
                                     <source
@@ -1392,12 +1426,12 @@
                                         media="(max-width: 767px)" type="video/mp4"
                                         src="https://prod-video.gu-plat.com/daf4814d-0ff4-4d6c-9175-44662b967033/mp4/LP-APP_PULSETTO_640p.mp4">
                                     Your browser does not support the video tag.
-                                </video>
+                                </video> -->
                             </div>
 
 
                             <div class="right text-block">
-                                <h2 class="subhead">5 CÀI ĐẶT HỖ TRỢ</h2>
+                                <h2 class="subhead" style="color: #00ff88;">5 CÀI ĐẶT HỖ TRỢ</h2>
                                 <h2 class="heading">Và Hơn Thế Nữa — Chọn Trạng Thái Thư Giãn Của Bạn Với Ứng Dụng
                                     Pulsetto!</h2>
                                 <div class="text">
@@ -4994,6 +5028,50 @@
             });
         });
     </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const block = document.getElementById("blk-725354");
+            const button = block.querySelector(".asset-video-player-button");
+            const buttonWrapper = block.querySelector(".asset-video-player-button-wrapper");
+            const mainVideo = block.querySelector(".asset-video-player");
+            const preroll = block.querySelector(".asset-video-player-preroll");
+
+            // Khi bấm nút ▶️
+            button.addEventListener("click", () => {
+                if (preroll) {
+                    preroll.pause();
+                    preroll.classList.add("hidden");
+                }
+
+                mainVideo.classList.remove("hidden");
+                mainVideo.play();
+
+                // Ẩn nút play
+                buttonWrapper.style.display = "none";
+            });
+
+            // Khi click lên video -> toggle play/pause
+            mainVideo.addEventListener("click", () => {
+                if (mainVideo.paused) {
+                    mainVideo.play();
+                } else {
+                    mainVideo.pause();
+                }
+            });
+
+            // Nếu video bị pause thì hiện lại nút ▶️
+            mainVideo.addEventListener("pause", () => {
+                buttonWrapper.style.display = "flex";
+            });
+
+            // Khi video play thì ẩn nút ▶️
+            mainVideo.addEventListener("play", () => {
+                buttonWrapper.style.display = "none";
+            });
+        });
+    </script>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
